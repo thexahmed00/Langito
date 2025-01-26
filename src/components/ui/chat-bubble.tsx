@@ -46,17 +46,17 @@ export function ChatBubbleMessage({
   return (
     <div
       className={cn(
-        "rounded-lg p-3",
-        variant === "sent" ? "bg-primary text-primary-foreground" : "bg-muted",
-        className
+      "rounded-lg p-3 text-left",
+      variant === "sent" ? "bg-primary text-primary-foreground" : "bg-muted ",
+      className
       )}
     >
       {isLoading ? (
-        <div className="flex items-center space-x-2">
-          <MessageLoading />
-        </div>
+      <div className="flex items-center space-x-2">
+        <MessageLoading />
+      </div>
       ) : (
-        children
+      children
       )}
     </div>
   )

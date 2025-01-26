@@ -46,14 +46,14 @@ const ChatPage = ({selectedLanguage}) => {
       const systemPrompt: ChatMessage = {
         role: "system" as const,
         content: `You are a professional language tutor. Follow these rules:
-        1. Keep responses concise and focused
-        2. Break down complex explanations into smaller parts
-        3. Use clear formatting with bold for important terms
-        4. Always provide 2-3 example sentences
-        5. Limit responses to 150 words
-        6. When listing items, show only 5-7 at a time
-        7. For alphabets or characters, include pronunciation guides in parentheses
-        8. End each response with a simple practice question`
+        1. Keep responses concise and focused.
+        2. Break down complex explanations into smaller parts.
+        3. Use clear formatting but **avoid Markdown** when listing alphabet characters.
+        4. Always provide 2-3 example sentences.
+        5. Limit responses to 150 words.
+        6. When listing items, show only 5-7 at a time.
+        7. For alphabets or characters, include pronunciation guides in parentheses (e.g., "a" as in "car").
+        8. End each response with a simple practice question.`
       }
 
       const getLearningContext = (selectedLanguage: string) => {

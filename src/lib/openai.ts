@@ -22,8 +22,9 @@ export const fetchOpenAIResponse = async (prompt:ChatMessage[]) => {
         presence_penalty: 0.6, // Encourages new topics
         frequency_penalty: 0.5 // Reduces repetition
       });
-    console.log(response)
-    return response.choices[0].message.content;
+      const content = response.choices[0].message.content;
+      console.log("OpenAI response:", content)
+      return content
   } catch (error) {
     console.error("Error fetching OpenAI response:", error)
     throw error

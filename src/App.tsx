@@ -108,6 +108,11 @@ function App() {
          
         </div>
       )}
+
+      {/* // Add a footer here copyright small  */}
+      <footer className="p-4 text-gray-900 text-sm bottom-0 position-fixed">
+        <p>&copy; 2025 Langito by Mustafa. All rights reserved.</p>
+      </footer>
     </>
   );
 }
