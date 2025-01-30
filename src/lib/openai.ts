@@ -1,7 +1,7 @@
 import OpenAI from "openai"
 
 const openai = new OpenAI({
-  apiKey:'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',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 })
 
@@ -23,7 +23,6 @@ export const fetchOpenAIResponse = async (prompt:ChatMessage[]) => {
         frequency_penalty: 0.5 // Reduces repetition
       });
       const content = response.choices[0].message.content;
-      console.log("OpenAI response:", content)
       return content
   } catch (error) {
     console.error("Error fetching OpenAI response:", error)
