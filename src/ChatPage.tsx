@@ -13,7 +13,11 @@ interface Message {
   sender: "user" | "bot"
 }
 
-const ChatPage = ({selectedLanguage}) => {
+interface ChatPageProps {
+  selectedLanguage: string;
+}
+
+const ChatPage: React.FC<ChatPageProps> = ({ selectedLanguage }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -23,9 +27,17 @@ const ChatPage = ({selectedLanguage}) => {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [userMessageCount, setUserMessageCount] = useState(0)
+  const [showThankYouDialog, setShowThankYouDialog] = useState(false)
 
   const handleSend = async () => {
     if (!input.trim()) return
+
+    if (userMessageCount >= 5) {
+      setShowThankYouDialog(true);
+      
+      return;
+    }
 
     const userMessage: Message = {
       id: messages.length + 1,
@@ -36,24 +48,26 @@ const ChatPage = ({selectedLanguage}) => {
     setMessages(prev => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
+    setUserMessageCount(prev => prev + 1);
 
     try {
-      const chatHistory:ChatMessage[] = messages.map(msg => ({
+      const chatHistory: ChatMessage[] = messages.map(msg => ({
         role: msg.sender === "user" ? "user" : "assistant",
         content: msg.message
       }))
 
       const systemPrompt: ChatMessage = {
         role: "system" as const,
-        content: `You are a professional language tutor. Follow these rules:
-        1. Keep responses concise and focused.
-        2. Break down complex explanations into smaller parts.
-        3. Use clear formatting but **avoid Markdown** when listing alphabet characters.
-        4. Always provide 2-3 example sentences.
-        5. Limit responses to 150 words.
+        content: `You are a friendly and supportive language tutor. Your goal is to help users learn ${selectedLanguage} in a fun and engaging way. 
+        Follow these guidelines:
+        1. Keep responses clear and concise.
+        2. Break down complex explanations into simple parts.
+        3. Use friendly language and encourage users to ask questions.
+        4. Provide 2-3 example sentences for clarity.
+        5. Limit responses to 150 words to keep it digestible.
         6. When listing items, show only 5-7 at a time.
         7. For alphabets or characters, include pronunciation guides in parentheses (e.g., "a" as in "car").
-        8. End each response with a simple practice question.`
+        8. End each response with a simple practice question to encourage interaction.`
       }
 
       const getLearningContext = (selectedLanguage: string) => {
@@ -71,9 +85,11 @@ const ChatPage = ({selectedLanguage}) => {
         { role: "user", content: input }
       ])
 
+      const cleanedResponse = aiResponse.replace(/\*\*/g, '').trim();
+
       const botMessage: Message = {
         id: messages.length + 2,
-        message: aiResponse?.trim() || "Sorry, I didn't understand that. Can you please rephrase?",
+        message: cleanedResponse || "Sorry, I didn't understand that. Can you please rephrase?",
         sender: "bot",
       }
 
@@ -120,6 +136,22 @@ const ChatPage = ({selectedLanguage}) => {
           <ChatInputSubmit />
         </ChatInput>
       </div>
+
+      {showThankYouDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-lg">
+            <h2 className="text-lg font-bold">Thank You!</h2>
+            <p>This is a free trial version of Muss AI. You can continue learning by subscribing to our paid plan in the future Inshallah !! .</p>
+            <p>Bye! Bye!! you can continue your now :).</p>
+            <button
+              className="mt-2 bg-blue-500 text-white py-1 px-3 rounded"
+              onClick={() => setShowThankYouDialog(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

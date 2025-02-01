@@ -43,7 +43,7 @@ function App() {
             </p>
           </div>
           <button
-            className=" text-white py-2 px-5 rounded"
+            className=" text-white py-2 px-5 rounded bg-black"
             onClick={handleStart}
           >
             Let's Start
@@ -57,7 +57,7 @@ function App() {
               
                 {selectedLanguage
                   ? selectedLanguage.charAt(0).toUpperCase() + selectedLanguage.slice(1)
-                  : "Select Language you want to translate"}
+                  : "Select Language you want to learn"}
               
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -72,13 +72,11 @@ function App() {
               >
                 <DropdownMenuRadioItem
                   value="english"
-                 
                 >
                   English
                 </DropdownMenuRadioItem>
                 <DropdownMenuRadioItem
                   value="french"
-                
                 >
                   French
                 </DropdownMenuRadioItem>
@@ -86,6 +84,11 @@ function App() {
                   value="german"
                 >
                   German
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem
+                  value="arabic"
+                >
+                  Arabic
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
