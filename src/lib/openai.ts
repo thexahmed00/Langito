@@ -8,7 +8,7 @@ export interface ChatMessage {
 }
 
 export const fetchOpenAIResponse = async (prompt:ChatMessage[]) => {
-  //add system prompt 
+
 console.log(import.meta.env.VITE_AZURE_OPENAI_ENDPOINT);
   try{
     const result = await axios.post(
