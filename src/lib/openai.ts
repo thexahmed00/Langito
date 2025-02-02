@@ -1,6 +1,4 @@
-
 import axios from "axios"
-
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
@@ -8,30 +6,25 @@ export interface ChatMessage {
 }
 
 export const fetchOpenAIResponse = async (prompt:ChatMessage[]) => {
-
-console.log(import.meta.env.VITE_AZURE_OPENAI_ENDPOINT);
-  try{
+  try {
     const result = await axios.post(
-     'https://my-first-worker.mussahmed081.workers.dev',
+      'https://my-first-worker.mussahmed081.workers.dev',
       {
         messages: prompt,
         max_tokens: 150,
         temperature: 0.6,
         presence_penalty: 0.6,
         frequency_penalty: 0.5
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": import.meta.env.VITE_AZURE_OPENAI_KEY,
-        },
       }
     );
-    console.log(result)
-    return result.data.choices[0].message.content
-  } catch (error) {
-    console.error("Error fetching OpenAI response:", error)
-    throw error
-  }
 
+    if (!result.data.choices || !result.data.choices[0]) {
+      throw new Error('Invalid response from API');
+    }
+
+    return result.data.choices[0].message.content;
+  } catch (error) {
+    console.error("Error fetching OpenAI response:", error);
+    throw error;
+  }
 }
