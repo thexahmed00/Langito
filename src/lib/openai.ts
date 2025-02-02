@@ -12,7 +12,7 @@ export const fetchOpenAIResponse = async (prompt:ChatMessage[]) => {
 console.log(import.meta.env.VITE_AZURE_OPENAI_ENDPOINT);
   try{
     const result = await axios.post(
-      import.meta.env.VITE_AZURE_OPENAI_ENDPOINT,
+     'https://my-first-worker.mussahmed081.workers.dev',
       {
         messages: prompt,
         max_tokens: 150,
